@@ -3,7 +3,7 @@
 }
 
 body {
-  background-color: #c08f8f;
+  background-color: #f4b9b9;
   font-family: Arial, Helvetica, sans-serif;
   margin: 0;
 }
@@ -32,7 +32,7 @@ header {
   align-items: center;
   justify-content: center;
   padding: 100px 0;
-  /* Position this relative */
+  /* Position this relative so we can position its descendant using absolute */
   position: relative;
 }
 
@@ -44,7 +44,7 @@ header::after {
   height: 100%;
   width: 100%;
   /* Adjusted */
-  background-color: rgba(125, 125, 125, 0.4);
+  background-color: rgba(150, 201, 237, 0.4);
 }
 
 /* Select everything in the header */
@@ -75,24 +75,24 @@ form button {
   position: absolute;
   top: 2px;
   right: 2px;
-  background-color: #83caec;
+  background-color: #ffffff;
   border: 0;
   border-radius: 50px;
-  color: #fff;
+  color: #64949a;
   font-size: 16px;
   padding: 13px 30px;
 }
 
 /* Injecting the btn class via JS */
 .btn {
-  background-color: #ffffff;
+  background-color: #8f94e7;
   border: 0;
   border-radius: 10px;
   color: #000000;
   padding: 4px 10px;
 }
 
-/* Won't see these styles until they fetch the data from the API */
+/* Won't see these styles until I fetch the data from the API */
 ul.songs {
   list-style-type: none;
   padding: 0;
