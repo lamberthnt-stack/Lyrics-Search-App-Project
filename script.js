@@ -1,4 +1,4 @@
-// Selectors
+// Pickers
 const form = document.getElementById('form');
 const search = document.getElementById('search');
 const result = document.getElementById('result');
@@ -6,7 +6,7 @@ const more = document.getElementById('more');
 
 const apiURL = 'https://api.lyrics.ovh';
 
-// Find by song or artist
+// Search by song or artist
 async function searchSongs(term) {
   const res = await fetch(`${apiURL}/suggest${term}`);
   const data = await res.json();
@@ -14,7 +14,7 @@ async function searchSongs(term) {
   console.log(data);
 }
 
-// Event watchers
+// Event Watchers 
 form.addEventListener('submit', (e) => {
   e.preventDefault();
 
@@ -157,7 +157,7 @@ async function getLyricsSafe(artist, songTitle) {
     return;
   }
 
-  // Heading creation in progress
+  // Handling creation in progress
   const heading = document.createElement('h2');
   const strong = document.createElement('strong');
   strong.textContent = artist;
@@ -165,7 +165,7 @@ async function getLyricsSafe(artist, songTitle) {
   heading.append(strong, ` - ${songTitle}`);
   result.append(heading);
 
-  // Lyrics block and line breaks creation here
+  // Lyric Blocks and Line Breaks Creation
   const span = document.createElement('span');
   const lines = data.lyrics.split(/\r\n|\r|\n/);
   lines.forEach((line, index) => {
