@@ -1,17 +1,20 @@
 // Selectors
 const form = document.getElementById('form');
-const find = document.getElementById('find');
+const search = document.getElementById('search');
 const result = document.getElementById('result');
 const more = document.getElementById('more');
 
 const apiURL = 'https://api.lyrics.ovh';
 
-// Find by song or artist
+// Search by song or artist
 async function searchSongs(term) {
-  const res = await fetch(`${apiURL}/suggest${term}`);
+  const res = await fetch(`${apiURL}/suggest/${term}`);
   const data = await res.json();
 
   console.log(data);
+
+  // Show the data in the DOM using SAFE version
+  showDataSafe(data);
 }
 
 // Event listeners
@@ -27,40 +30,7 @@ form.addEventListener('submit', (e) => {
   }
 });
 
-// Show song and artist in the DOM
-// NOTE: Yes, this uses the insecure .innerHTML.
-function showDataUnsafe(lyrics) {
-  result.innerHTML = `
-    <ul class="songs">
-      ${lyrics.data
-        .map(
-          (song) => `<li>
-      <span><strong>${song.artist.name}</strong> - ${song.title}</span>
-      <button class="btn" data-artist="${song.artist.name}" data-songtitle="${song.title}">Get Lyrics</button>
-    </li>`
-        )
-        .join('')}
-    </ul>
-  `;
-
-  if (lyrics.prev || lyrics.next) {
-    more.innerHTML = `
-      ${
-        lyrics.prev
-          ? `<button class="btn" onclick="getMoreSongs('${lyrics.prev}')">Prev</button>`
-          : ''
-      }
-      ${
-        lyrics.next
-          ? `<button class="btn" onclick="getMoreSongs('${lyrics.next}')">Next</button>`
-          : ''
-      }
-    `;
-  } else {
-    more.innerHTML = '';
-  }
-}
-
+// Show song and artist in the DOM (Original SAFE version)
 function showDataSafe(lyrics) {
   result.innerHTML = '';
   more.innerHTML = '';
@@ -92,6 +62,7 @@ function showDataSafe(lyrics) {
 
   result.appendChild(ul);
 
+  // Pagination buttons
   if (lyrics.prev || lyrics.next) {
     if (lyrics.prev) {
       const prevButton = document.createElement('button');
@@ -111,6 +82,14 @@ function showDataSafe(lyrics) {
   }
 }
 
+// Fetch paginated results
+async function getMoreSongs(url) {
+  // Using a proxy because API pagination URLs do not allow direct browser CORS
+  const res = await fetch(`https://cors-anywhere.herokuapp.com/${url}`);
+  const data = await res.json();
+  showDataSafe(data);
+}
+
 // Get lyrics button click
 result.addEventListener('click', (e) => {
   const clickedEl = e.target;
@@ -119,30 +98,11 @@ result.addEventListener('click', (e) => {
     const artist = clickedEl.getAttribute('data-artist');
     const songTitle = clickedEl.getAttribute('data-songtitle');
 
-    // getLyricsUnsafe(artist, songTitle);
     getLyricsSafe(artist, songTitle);
   }
 });
 
-// Get lyrics for song
-async function getLyricsUnsafe(artist, songTitle) {
-  const res = await fetch(`${apiURL}/v1/${artist}/${songTitle}`);
-  const data = await res.json();
-
-  if (data.error) {
-    result.innerHTML = data.error;
-  } else {
-    const lyrics = data.lyrics.replace(/(\r\n|\r|\n)/g, '<br>');
-
-    result.innerHTML = `
-            <h2><strong>${artist}</strong> - ${songTitle}</h2>
-            <span>${lyrics}</span>
-        `;
-  }
-
-  more.innerHTML = '';
-}
-
+// Get lyrics for song (Original SAFE version)
 async function getLyricsSafe(artist, songTitle) {
   const res = await fetch(`${apiURL}/v1/${artist}/${songTitle}`);
   const data = await res.json();
