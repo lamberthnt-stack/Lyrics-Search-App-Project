@@ -3,27 +3,24 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <link rel="stylesheet" href="styles.css" />
+    <link rel="stylesheet" href="style.css" />
     <title>LyricsFinder</title>
     <script src="script.js" defer></script>
   </head>
   <body>
     <header>
-      <h1>LyricFinds</h1>
+      <h1>LyricsFinder</h1>
       <form id="form">
         <input
           type="text"
-          id="finder"
-          placeholder="Enter artist or song name..."
+          id="search"
+          placeholder="Search artist or song name..."
         />
-        <button>Find</button>
+        <button class="btn">Find Lyrics</button>
       </form>
     </header>
 
-    <div id="result" class="container">
-      <p>Results will be displayed here</p>
-    </div>
-    <!-- My results will be numbered -->
+    <div id="result" class="container"></div>
     <div id="more" class="container centered"></div>
   </body>
 </html>
