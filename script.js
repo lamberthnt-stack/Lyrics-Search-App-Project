@@ -1,10 +1,10 @@
 // Pickers
 const form = document.getElementById('form');
-const search = document.getElementById('search');
+const find = document.getElementById('find');
 const result = document.getElementById('result');
 const more = document.getElementById('more');
 
-const apiURL = 'https://api.lyrics.ovh';
+const apiURL = 'https://api.allorigins.win/raw?url=https://api.lyrics.ovh';
 
 // Search by song or artist
 async function searchSongs(term) {
